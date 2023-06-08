@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>게시글 업로드</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <style>
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.75em;
+            color: #000;
+            background-color: #222;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 5px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-create {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            padding: 0;
+            margin: 0;
+            display: inline-block;
+        }
+
+        /*
+            게시판 목록 행 단위
+            목록 요소 자체를 가운데 정렬하기
+            ul 기본 가로 크기는 100%이므로, 가로 크기를 지정해줘야 가운데로 정렬할 수 있다.
+            가운데 정렬
+            번호, 제목, 작성자, 작성일, 조회, 좋아요 와 데이터 정렬
+        */
+        .board_row {
+            width: 1000px;
+            border-bottom: solid 1px gray;
+        }
+
+        /* 게시글 목록 공통 개별 요소 속성 */
+        li {
+            list-style: none;
+            border-bottom: solid 1px gray;
+            float: left;
+            text-align: center;
+            /* padding: 0;
+            margin: 0; */
+        }
+
+        /* 번호, 제목, 작성자, 작성일, 조회, 좋아요 row의 style 설정 */
+        .title_row > li {
+            height: 50px;
+            line-height: 50px;
+            background: rgb(233, 233, 233);
+            font-weight: bold;
+            border-top: solid 2px rgb(0, 0, 0);
+            border-right: solid 1px gray;
+        }
+
+        /* 게시글 목록 데이터 개별 요소 속성 */
+        .data_row > li {
+            height: 40px;
+            line-height: 40px;
+            font-weight: lighter;
+            border-right: solid 1px gray;
+        }
+
+        /* 요소들의 너비 설정 */
+        .w70 {
+            width: 70px;
+        }
+        .w500 {
+            width: 500px;
+        }
+        .w120 {
+            width: 120px;
+        }
+        .w100 {
+            width: 100px;
+        }
+
+        /* 게시판 목록 박스 */
+        .notice_board {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            /* 구성 요소 세로로 배치 */
+            flex-direction: column;
+        }
+
+        .pagination {
+            display: flex;
+            width: 400px;
+            justify-content: space-between;
+        }
+
+        /* 전체 중앙 정렬 */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+    <script>
+        let totalPage = 0;
+        let page_num = 20;
+        let block_num = 10;
+        let total_block = totalPage % 20 == 0 ? totalPage / 20 : Math.floor(totalPage / 20) + 1;
+        let current_block = 1;
+        let data = [];
+
+        function post_data_print(block) {
+            let post_list = document.querySelectorAll(".data_row");
+            post_list.forEach(function (item) {
+                item.remove();
+            });
+
+            let notice_board = document.querySelector(".notice_board");
+            let start = totalPage - page_num * (block - 1);
+            for (let i = start; i >= 1 && i > start - page_num; i--) {
+                let post = document.createElement("ul");
+                post.className = "board_row";
+                post.className = "data_row";
+
+                let classname = ["w70", "w500", "w120", "w100", "w100", "w100"];
+                let post_data = [
+                    data[i].notice_num,
+                    data[i].title,
+                    data[i].writer,
+                    data[i].date_created,
+                    data[i].Lookkup_num,
+                    data[i].like
+                ];
+
+                for (let j = 0; j < classname.length; j++) {
+                    let li = document.createElement("li");
+                    li.className = classname[j];
+                    li.textContent = post_data[j];
+                    post.appendChild(li);
+                }
+
+                notice_board.appendChild(post);
+            }
+        }
+
+        function block_print(front_block) {
+            current_block = front_block;
+
+            if (front_block <= 1) {
+                document.querySelector(".before_move").style.visibility = "hidden";
+            } else {
+                document.querySelector(".before_move").style.visibility = "visible";
+            }
+
+            if (front_block + block_num >= total_block) {
+                document.querySelector(".next_move").style.visibility = "hidden";
+            } else {
+                document.querySelector(".next_move").style.visibility = "visible";
+            }
+
+            let block_box = document.querySelector(".block");
+            block_box.replaceChildren();
+
+            for (let i = front_block; i <= total_block && i < front_block + block_num; i++) {
+                let button = document.createElement("button");
+                button.textContent = i;
+                button.addEventListener("click", function (event) {
+                    post_data_print(i);
+                });
+                block_box.appendChild(button);
+            }
+        }
+
+        function before() {
+            block_print(current_block - block_num);
+        }
+
+        function next() {
+            block_print(current_block + block_num);
+        }
+
+        window.onload = function () {
+            post_data_print(1);
+            block_print(1);
+        };
+    </script>
+
+</head>
+<body>
+
+    <h1 style="text-align: center;">Dash Board</h1>
+
+    <div class="container">
+        <div class="notice_board">
+
+            <!-- 게시글 작성 버튼 -->
+            <div class="btn-container">
+                <li class="w5"></li>
+                <a href="upload.html" class="btn-create">게시글 작성</a>
+            </div>
+
+            <!-- title 열 -->
+            <ul class="board_row title_row ">
+                <li class="w70">번호</li>
+                <li class="w500">제목</li>
+                <li class="w120">작성자</li>
+                <li class="w100">작성일</li>
+                <li class="w100">조회</li>
+                <li class="w100">좋아요</li>
+            </ul>
+            <!-- 게시글 추가로 들어오는 위치 -->
+        </div>
+
+        <!-- 페이지 블럭 -->
+        <div class="pagination">
+            <button class="before_move" onclick="before()">이전</button>
+            <div class="block">
+                <!-- 블럭 추가로 들어오는 위치 -->
+            </div>
+            <button class="next_move" onclick="next()">다음</button>
+        </div>
+    </div>
+
+</body>
+</html>
