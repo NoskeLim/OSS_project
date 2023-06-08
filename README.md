@@ -4,7 +4,7 @@
 ### 개발 환경 및 사용 프레임 워크
 1. Pycharm
 2. Flask Frame Work
-3. 
+3. HTML, CSS, JavaScript
 
 ### 제공기능
 총 3가지 기능을 제공한다. 
