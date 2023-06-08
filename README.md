@@ -22,11 +22,11 @@
 자신의 정보를 조회할 수 있으며 변경 가능하다.
 
 ### 시스템 구조 및 설계
-Index.html은 곧 메인 페이지를 담당한다. 
-위의 기능 3가지를 각각 다른 버튼으로 구현하여 각 기능을 담당하게 한다. 
-오른쪽 위의 배너는 navigate를 활용하여 Log In, Registration, My Information, Contact가 가능하
-모든 구성은 외부 Template소스코드의 html과 css로 구성하였고 css의 확장판인 scss도 같이 연동하여 구현하게 하였다. 
-Web Framework를 담당하는 Django와 Flask 중 Flask를 선택하게 된 이유는 Flask는 Django에 비하여 더 가볍고 심플한 Framework를 지향하기 때문에 
-위 프로젝트를 구성하는 데에 있어서 더 적합하여 선택하게 되었다. 이에 더하여 REST API 서버처럼 요청과 응답이 매우 확정적이기 때문에 효율적이라고 생각하였다.
-이 웹프로그램의 Back-End는 많은 Data나 서버에 대한 요청이 많지 않으므로 Pyhton으로 구성하여 빠르고 효율적인 프로그램을 구성하도록 하였다.
+ Index.html은 곧 메인 페이지를 담당한다. 
+ 위의 기능 3가지를 각각 다른 버튼으로 구현하여 각 기능을 담당하게 한다. 
+ 오른쪽 위의 배너는 navigate를 활용하여 Log In, Registration, My Information, Contact가 가능하
+ 모든 구성은 외부 Template소스코드의 html과 css로 구성하였고 css의 확장판인 scss도 같이 연동하여 구현하게 하였다. 
+ Web Framework를 담당하는 Django와 Flask 중 Flask를 선택하게 된 이유는 Flask는 Django에 비하여 더 가볍고 심플한 Framework를 지향하기 때문에 
+ 위 프로젝트를 구성하는 데에 있어서 더 적합하여 선택하게 되었다. 이에 더하여 REST API 서버처럼 요청과 응답이 매우 확정적이기 때문에 효율적이라고 생각하였다.
+ 이 웹프로그램의 Back-End는 많은 Data나 서버에 대한 요청이 많지 않으므로 Pyhton으로 구성하여 빠르고 효율적인 프로그램을 구성하도록 하였다.
 
