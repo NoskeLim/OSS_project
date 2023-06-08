@@ -1,3 +1,5 @@
+//사용자 UI를 위한 외부 CSS 활용 Template
+
 Phantom by HTML5 UP
 html5up.net | @ajlkn
 Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
